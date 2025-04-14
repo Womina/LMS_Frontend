@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawassa Library | System Settings</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+         .dark-mode {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+        
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        .dark-mode .card-body{
+            color: white;
+        }
+        .settings-card {
+            border-left: 4px solid #4e73df;
+            transition: all 0.3s;
+        }
+        .settings-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+         .sidebar{
+        background-color:#ebf8fa;
+        color: #1e1e1e;
+        }
+        .dark-mode .settings-card {
+            background-color: #1e1e1e;
+            border-color: #4e73df;
+        }
+        .form-switch .form-check-input {
+            width: 3em;
+            height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== Admin Navbar ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark admin-header fixed-top bg-light shadow">
+        <div class="container">
+            <img src="images/logo1.png" alt = "logo" class = "rounded-pill" style="width:40px; heigh:45px;">
+            <a class="navbar-brand text-primary fw-bold" href="User management.html">
+                <i class="fas fa-shield-alt me-2"></i> Admin Portal
+            </a>
+            <div class="d-flex">
+                <button id="darkModeToggle" class="btn btn-sm btn-light me-3">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-light border-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-cog me-1"></i> Admin User
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Admin Sidebar ===== -->
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <nav id="sidebar" class="sidebar col-md-3 col-lg-2 d-md-block sidebar collapse shadow-lg ">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item ">
+                            <a class="nav-link active " href="Adminhome.html">
+                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="User management.html">
+                                <i class="fas fa-users me-2"></i> User Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="Book Management.html">
+                                <i class="fas fa-book me-2"></i> Book Managment
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="Analaytics.html">
+                                <i class="fas fa-chart-bar me-2"></i> Analytics
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="system-setting.html">
+                                <i class="fas fa-cog me-2"></i> System Settings
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-warning" href="#">
+                                <i class="fas fa-exclamation-triangle me-2"></i> Alerts (3)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+    <!-- ===== Main Content ===== -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 my-5">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h3 mb-0"><i class="fas fa-cog me-2"></i> System Settings</h2>
+            <button class="btn btn-primary" id="saveAllSettings">
+                <i class="fas fa-save me-1"></i> Save All Changes
+            </button>
+        </div>
+
+        <!-- System Configuration Tabs -->
+        <ul class="nav nav-tabs mb-4" id="settingsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button">
+                    <i class="fas fa-sliders-h me-1"></i> General
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button">
+                    <i class="fas fa-bell me-1"></i> Notifications
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button">
+                    <i class="fas fa-shield-alt me-1"></i> Security
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="backup-tab" data-bs-toggle="tab" data-bs-target="#backup" type="button">
+                    <i class="fas fa-database me-1"></i> Backup
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="settingsTabsContent">
+            <!-- ===== GENERAL SETTINGS TAB ===== -->
+            <div class="tab-pane fade show active" id="general" role="tabpanel">
+                <div class="row">
+                    <!-- Library Information -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-info-circle me-2"></i> Library Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="libraryInfoForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Library Name</label>
+                                        <input type="text" class="form-control" value="Hawassa Public Library" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Email</label>
+                                        <input type="email" class="form-control" value="contact@hawassalibrary.com" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" value="+251 46 221 1122">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Address</label>
+                                        <textarea class="form-control" rows="2">Hawassa, Sidama, Ethiopia</textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Preferences -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-tools me-2"></i> System Preferences</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="systemPrefsForm">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="maintenanceMode" checked>
+                                        <label class="form-check-label" for="maintenanceMode">Maintenance Mode</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="allowRegistrations" checked>
+                                        <label class="form-check-label" for="allowRegistrations">Allow New Registrations</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Default Checkout Period (Days)</label>
+                                        <input type="number" class="form-control" value="14" min="1" max="30">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Late Fee Per Day (ETB)</label>
+                                        <input type="number" class="form-control" value="5" min="0" step="0.5">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== NOTIFICATIONS TAB ===== -->
+            <div class="tab-pane fade" id="notifications" role="tabpanel">
+                <div class="row">
+                    <!-- Email Notifications -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-envelope me-2"></i> Email Notifications</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="emailNotificationsForm">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="notifyOverdue" checked>
+                                        <label class="form-check-label" for="notifyOverdue">Overdue Reminders</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="notifyReservations" checked>
+                                        <label class="form-check-label" for="notifyReservations">Reservation Alerts</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Reminder Frequency</label>
+                                        <select class="form-select">
+                                            <option>Daily</option>
+                                            <option selected>Weekly</option>
+                                            <option>Monthly</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SMS Alerts -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-sms me-2"></i> SMS Alerts</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="smsAlertsForm">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="smsOverdue">
+                                        <label class="form-check-label" for="smsOverdue">Overdue SMS Alerts</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SMS Provider</label>
+                                        <select class="form-select">
+                                            <option>Ethio Telecom</option>
+                                            <option>Twilio</option>
+                                            <option>Custom API</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">API Key</label>
+                                        <input type="password" class="form-control" placeholder="Enter SMS API key">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SECURITY TAB ===== -->
+            <div class="tab-pane fade" id="security" role="tabpanel">
+                <div class="row">
+                    <!-- Authentication -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-user-lock me-2"></i> Authentication</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="authSettingsForm">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="enable2FA">
+                                        <label class="form-check-label" for="enable2FA">Enable Two-Factor Authentication</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Password Policy</label>
+                                        <select class="form-select">
+                                            <option selected>Medium (8+ chars, 1 special)</option>
+                                            <option>Strong (12+ chars, mixed case)</option>
+                                            <option>Custom...</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Session Timeout (Minutes)</label>
+                                        <input type="number" class="form-control" value="30" min="5" max="1440">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IP Restrictions -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-network-wired me-2"></i> IP Restrictions</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="ipRestrictionsForm">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="enableIPWhitelist">
+                                        <label class="form-check-label" for="enableIPWhitelist">Enable IP Whitelist</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Allowed IP Addresses</label>
+                                        <textarea class="form-control" rows="3" placeholder="Enter one IP per line">192.168.1.1
+10.0.0.0/8</textarea>
+                                        <small class="text-muted">Use CIDR notation for ranges (e.g., 10.0.0.0/8)</small>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== BACKUP TAB ===== -->
+            <div class="tab-pane fade" id="backup" role="tabpanel">
+                <div class="row">
+                    <!-- Backup Configuration -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-download me-2"></i> Backup Configuration</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="backupConfigForm">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="autoBackups" checked>
+                                        <label class="form-check-label" for="autoBackups">Automatic Backups</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Backup Frequency</label>
+                                        <select class="form-select">
+                                            <option>Daily</option>
+                                            <option selected>Weekly</option>
+                                            <option>Monthly</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Backup Location</label>
+                                        <select class="form-select">
+                                            <option selected>Local Server</option>
+                                            <option>Google Drive</option>
+                                            <option>Amazon S3</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backup Actions -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card settings-card h-100">
+                            <div class="card-header bg-white">
+                                <h5><i class="fas fa-play-circle me-2"></i> Immediate Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary text-start">
+                                        <i class="fas fa-download me-2"></i> Create Backup Now
+                                    </button>
+                                    <button class="btn btn-outline-warning text-start">
+                                        <i class="fas fa-upload me-2"></i> Restore Backup
+                                    </button>
+                                    <button class="btn btn-outline-danger text-start">
+                                        <i class="fas fa-trash-alt me-2"></i> Purge Old Backups
+                                    </button>
+                                </div>
+                                <hr>
+                                <h6 class="mb-3"><i class="fas fa-history me-2"></i> Recent Backups</h6>
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between">
+                                            <span>backup_20240515.zip</span>
+                                            <small class="text-muted">15 May 2024</small>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex justify-content-between">
+                                            <span>backup_20240508.zip</span>
+                                            <small class="text-muted">8 May 2024</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+            // Dark Mode Toggle 
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+        
+        // Initialize dark mode
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('#darkModeToggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+        // Save all settings
+        document.getElementById('saveAllSettings').addEventListener('click', function() {
+            // Collect data from all forms
+            const settings = {
+                libraryInfo: Object.fromEntries(new FormData(document.getElementById('libraryInfoForm'))),
+                systemPrefs: Object.fromEntries(new FormData(document.getElementById('systemPrefsForm'))),
+                // Add other forms...
+            };
+            
+            // Simulate API call
+            console.log('Saving settings:', settings);
+            alert('Settings saved successfully!');
+        });
+
+        // Initialize tab functionality
+        const settingsTabs = new bootstrap.Tab(document.getElementById('general-tab'));
+    </script>
+</body>
+</html>

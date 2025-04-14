@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawassa Library | Book Management</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --admin-red: #dbeaf0;
+            --admin-dark:#dbeaf0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        
+        .dark-mode {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+        
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        .dark-mode .row{
+          color: #1e1e1e;
+          }
+          .dark-mode .modal-title{
+             color: #1e1e1e;
+             }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 10px;
+        }
+        .sidebar{
+        background-color:#ebf8fa;
+        color: #1e1e1e;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-card {
+            border-top: 4px solid var(--admin-red);
+        }
+        
+        .action-buttons .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge-available {
+            background-color: #1cc88a;
+        }
+        
+        .badge-checkedout {
+            background-color: #f6c23e;
+            color: #000;
+        }
+        
+        .badge-reserved {
+            background-color: #4e73df;
+        }
+        
+        .badge-unavailable {
+            background-color: #e74a3b;
+        }
+        
+        .book-cover {
+            width: 60px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid #ced4da;
+            padding: 0.375rem 0.75rem;
+        }
+        
+        .select2-container .select2-selection--multiple {
+            min-height: 38px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== Admin Navbar ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark admin-header fixed-top bg-light shadow">
+        <div class="container">
+            <img src="images/logo1.png" alt = "logo" class = "rounded-pill" style="width:40px; heigh:45px;">
+            <a class="navbar-brand text-primary fw-bold" href="Adminhome.html">
+                <i class="fas fa-shield-alt me-2"></i> Admin Portal
+            </a>
+            <div class="d-flex">
+                <button id="darkModeToggle" class="btn btn-sm btn-light me-3">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-light border-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-cog me-1"></i> Admin User
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Admin Sidebar ===== -->
+    <div class="container-fluid mt-5 ">
+        <div class="row">
+            <nav id="sidebar" class="sidebar col-md-3 col-lg-2 d-md-block  sidebar collapse shadow-lg ">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link " href="Adminhome.html">
+                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="User management.html">
+                                <i class="fas fa-users me-2"></i> User Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Book management.html">
+                                <i class="fas fa-book me-2"></i> Book Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Analaytics.html">
+                                <i class="fas fa-chart-bar me-2"></i> Analytics
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="system-setting.html">
+                                 <i class="fas fa-cog me-2"></i> System Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- ===== Main Content ===== -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 my-5">
+                 <!-- statistics -->
+<div class="row mb-4">
+    <!-- Total Books Card -->
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-uppercase small">Total Books</h6>
+                        <h2 class="mb-0">10,452</h2>
+                    </div>
+                    <i class="fas fa-book fa-2x opacity-50"></i>
+                </div>
+                <div class="mt-3">
+                    <span class="badge bg-white text-primary">+245 this month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Available Books Card -->
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-uppercase small">Available</h6>
+                        <h2 class="mb-0">8,127</h2>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x opacity-50"></i>
+                </div>
+                <div class="mt-3">
+                    <span class="badge bg-white text-success">78% available</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Checked Out Card -->
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-warning text-dark">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-uppercase small">Checked Out</h6>
+                        <h2 class="mb-0">1,842</h2>
+                    </div>
+                    <i class="fas fa-exchange-alt fa-2x opacity-50"></i>
+                </div>
+                <div class="mt-3">
+                    <span class="badge bg-dark text-white">17.6% of collection</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overdue Books Card -->
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-danger text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-uppercase small">Overdue</h6>
+                        <h2 class="mb-0">127</h2>
+                    </div>
+                    <i class="fas fa-clock fa-2x opacity-50"></i>
+                </div>
+                <div class="mt-3">
+                    <span class="badge bg-white text-danger">+8 this week</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <!-- Page Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="h3 mb-0"><i class="fas fa-book me-2"></i> Book Management</h2>
+                    <div>
+                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addBookModal">
+                            <i class="fas fa-plus me-1"></i> Add Book
+                        </button>
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#importBooksModal">
+                            <i class="fas fa-file-import me-1"></i> Import E-Book
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book Table -->
+                <div class="card admin-card">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">All Books</h5>
+                        <div class="d-flex">
+                            <div class="input-group input-group-sm me-2" style="width: 200px;">
+                                <select class="form-select" id="filterCategory">
+                                    <option value="">All Categories</option>
+                                    <option value="fiction">Fiction</option>
+                                    <option value="non-fiction">Non-Fiction</option>
+                                    <option value="technology">Technology</option>
+                                </select>
+                            </div>
+                            <div class="input-group input-group-sm" style="width: 200px;">
+                                <input type="text" class="form-control" placeholder="Search..." id="searchInput">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="booksTable">
+                                <thead>
+                                    <tr>
+                                        <th>Cover</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
+                                        <th>Qty</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="https://via.placeholder.com/60x80" class="book-cover" alt="Book Cover"></td>
+                                        <td>Love to Grave</td>
+                                        <td>Hadis Alemayew</td>
+                                        <td>978-1234567890</td>
+                                        <td>Fiction</td>
+                                        <td><span class="badge badge-available">Available</span></td>
+                                        <td>5</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary me-1" title="Edit" data-bs-toggle="modal" data-bs-target="#editBookModal">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger me-1" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteBookModal">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="https://via.placeholder.com/60x80" class="book-cover" alt="Book Cover"></td>
+                                        <td>Harry Potter</td>
+                                        <td>J.K. Rowling</td>
+                                        <td>978-0439554930</td>
+                                        <td>Fantasy</td>
+                                        <td><span class="badge badge-checkedout">Checked Out</span></td>
+                                        <td>3</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger me-1" title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="https://via.placeholder.com/60x80" class="book-cover" alt="Book Cover"></td>
+                                        <td>The Art of Hacking</td>
+                                        <td>John Bruslly</td>
+                                        <td>978-1119416926</td>
+                                        <td>Technology</td>
+                                        <td><span class="badge badge-reserved">Reserved</span></td>
+                                        <td>2</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger me-1" title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="https://via.placeholder.com/60x80" class="book-cover" alt="Book Cover"></td>
+                                        <td>Data Structures</td>
+                                        <td>Maria Michel</td>
+                                        <td>978-0134576711</td>
+                                        <td>Computer Science</td>
+                                        <td><span class="badge badge-unavailable">Unavailable</span></td>
+                                        <td>0</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger me-1" title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Book Modal -->
+    <div class="modal fade" id="addBookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-book-medical me-2"></i> Add New Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBookForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Author</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">ISBN</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Publisher</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Publication Year</label>
+                                <input type="number" class="form-control" min="1900" max="2025">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Edition</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control" min="1" value="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3">
+                            <label class="form-label">Select Catagory</label>
+                            <select class="form-select">
+                                <option value="add">Fiction</option>
+                                <option value="update">Tech</option>
+                                <option value="replace">Science</option>
+                            </select>
+                        </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" required>
+                                    <option value="available" selected>Available</option>
+                                    <option value="checkedout">Checked Out</option>
+                                    <option value="reserved">Reserved</option>
+                                    <option value="unavailable">Unavailable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cover Image</label>
+                            <input type="file" class="form-control" accept="image/*">
+                        </div>
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Book</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Book Modal -->
+    <div class="modal fade" id="editBookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-book-edit me-2"></i> Edit Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editBookForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" value="Love to Grave" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Author</label>
+                                <input type="text" class="form-control" value="Hadis Alemayew" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">ISBN</label>
+                                <input type="text" class="form-control" value="978-1234567890" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Publisher</label>
+                                <input type="text" class="form-control" value="Hawassa Publishing">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Publication Year</label>
+                                <input type="number" class="form-control" value="2022" min="1900" max="2025">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Edition</label>
+                                <input type="text" class="form-control" value="1st Edition">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control" value="5" min="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Categories</label>
+                                <select class="form-select categories-select" multiple="multiple">
+                                    <option value="fiction" selected>Fiction</option>
+                                    <option value="amharic" selected>Amharic</option>
+                                    <option value="non-fiction">Non-Fiction</option>
+                                    <option value="technology">Technology</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" required>
+                                    <option value="available" selected>Available</option>
+                                    <option value="checkedout">Checked Out</option>
+                                    <option value="reserved">Reserved</option>
+                                    <option value="unavailable">Unavailable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3">A captivating love story that transcends time and space.</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cover Image</label>
+                            <input type="file" class="form-control" accept="image/*">
+                            <small class="text-muted">Current: cover.jpg</small>
+                        </div>
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Books Modal -->
+    <div class="modal fade" id="importBooksModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-import me-2"></i> Import Books</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="importBooksForm">
+                        <div class="mb-3">
+                            <label class="form-label">Select File</label>
+                            <input type="file" class="form-control" accept=".csv, .xlsx">
+                            <small class="text-muted">Supported formats: CSV, Excel</small>
+                        </div>
+                         <div class="mb-3">
+                            <label class="form-label">Select Catagory</label>
+                            <select class="form-select">
+                                <option value="add">Fiction</option>
+                                <option value="update">Tech</option>
+                                <option value="replace">Science</option>
+                            </select>
+                        </div>
+                         <div class="modal-body">
+                    <form id="addBookForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Author</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Publisher</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Publication Year</label>
+                                <input type="number" class="form-control" min="1900" max="2025">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Edition</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control" min="1" value="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" required>
+                                    <option value="available" selected>Available</option>
+                                    <option value="checkedout">Checked Out</option>
+                                    <option value="reserved">Reserved</option>
+                                    <option value="unavailable">Unavailable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Import Mode</label>
+                            <select class="form-select">
+                                <option value="add">Add new books only</option>
+                                <option value="update">Update existing books</option>
+                                <option value="replace">Replace all books</option>
+                            </select>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="importOverwrite">
+                            <label class="form-check-label" for="importOverwrite">
+                                Overwrite existing book data
+                            </label>
+                        </div>
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Import Books</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Book Modal -->
+    <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i> Confirm Deletion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this book? This action cannot be undone.</p>
+                    <p class="fw-bold">Book: Love to Grave (ISBN: 978-1234567890)</p>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="deleteCopies">
+                        <label class="form-check-label" for="deleteCopies">
+                            Also delete all copies (5) of this book
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger">Delete Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#booksTable').DataTable({
+                dom: '<"top"lf>rt<"bottom"ip>',
+                responsive: true,
+                columnDefs: [
+                    { responsivePriority: 1, targets: 1 }, // Title
+                    { responsivePriority: 2, targets: -1 }, // Actions
+                    { orderable: false, targets: [0, -1] } // Disable sorting on cover and actions
+                ]
+            });
+            
+            // Initialize Select2 for categories
+            $('.categories-select').select2({
+                placeholder: "Select categories",
+                width: '100%',
+                dropdownParent: $('#addBookModal, #editBookModal')
+            });
+            
+            // Dark mode toggle
+            document.getElementById('darkModeToggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('darkMode', 'true');
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('darkMode', 'false');
+                }
+            });
+            
+            // Initialize dark mode
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('#darkModeToggle i').classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            // Form validation
+            $('#addBookForm, #editBookForm').on('submit', function(e) {
+                e.preventDefault();
+                // Add your form submission logic here
+                alert('Book saved successfully!');
+                $('.modal').modal('hide');
+            });
+            
+            // Import form
+            $('#importBooksForm').on('submit', function(e) {
+                e.preventDefault();
+                alert('Books imported successfully!');
+                $('#importBooksModal').modal('hide');
+            });
+            
+            // Delete confirmation
+            $('#deleteBookModal .btn-danger').on('click', function() {
+                const deleteCopies = $('#deleteCopies').is(':checked');
+                // Add your delete logic here
+                alert('Book deleted successfully!' + (deleteCopies ? ' All copies were removed.' : ''));
+                $('#deleteBookModal').modal('hide');
+            });
+            
+            // Category filter
+            $('#filterCategory').on('change', function() {
+                const table = $('#booksTable').DataTable();
+                table.column(4).search(this.value).draw();
+            });
+        });
+    // Update the stats cards dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.stat-card.bg-primary h2').textContent = bookStats.total.toLocaleString();
+        document.querySelector('.stat-card.bg-success h2').textContent = bookStats.available.toLocaleString();
+        document.querySelector('.stat-card.bg-warning h2').textContent = bookStats.checkedOut.toLocaleString();
+        document.querySelector('.stat-card.bg-danger h2').textContent = bookStats.overdue.toLocaleString();
+        
+        // Calculate availability percentage
+        const availablePercent = Math.round((bookStats.available / bookStats.total) * 100);
+        document.querySelector('.stat-card.bg-success .badge').textContent = `${availablePercent}% available`;
+    });
+    </script>
+</body>
+</html>
